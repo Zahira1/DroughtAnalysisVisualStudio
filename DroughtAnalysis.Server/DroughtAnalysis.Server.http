@@ -1,0 +1,6 @@
+@DroughtAnalysis.Server_HostAddress = http://localhost:5077
+
+GET {{DroughtAnalysis.Server_HostAddress}}/weatherforecast/
+Accept: application/json
+
+###

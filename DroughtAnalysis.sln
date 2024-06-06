@@ -1,0 +1,33 @@
+﻿
+Microsoft Visual Studio Solution File, Format Version 12.00
+# Visual Studio Version 17
+VisualStudioVersion = 17.8.34511.84
+MinimumVisualStudioVersion = 10.0.40219.1
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "DroughtAnalysis.Server", "DroughtAnalysis.Server\DroughtAnalysis.Server.csproj", "{16BE9106-0664-4AA1-BCCB-2350EEC94381}"
+EndProject
+Project("{54A90642-561A-4BB1-A94E-469ADEE60C69}") = "droughtanalysis.client", "droughtanalysis.client\droughtanalysis.client.esproj", "{07909B21-0EA7-4F02-B7E4-BD7F236AB08F}"
+EndProject
+Global
+	GlobalSection(SolutionConfigurationPlatforms) = preSolution
+		Debug|Any CPU = Debug|Any CPU
+		Release|Any CPU = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(ProjectConfigurationPlatforms) = postSolution
+		{16BE9106-0664-4AA1-BCCB-2350EEC94381}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{16BE9106-0664-4AA1-BCCB-2350EEC94381}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{16BE9106-0664-4AA1-BCCB-2350EEC94381}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{16BE9106-0664-4AA1-BCCB-2350EEC94381}.Release|Any CPU.Build.0 = Release|Any CPU
+		{07909B21-0EA7-4F02-B7E4-BD7F236AB08F}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{07909B21-0EA7-4F02-B7E4-BD7F236AB08F}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{07909B21-0EA7-4F02-B7E4-BD7F236AB08F}.Debug|Any CPU.Deploy.0 = Debug|Any CPU
+		{07909B21-0EA7-4F02-B7E4-BD7F236AB08F}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{07909B21-0EA7-4F02-B7E4-BD7F236AB08F}.Release|Any CPU.Build.0 = Release|Any CPU
+		{07909B21-0EA7-4F02-B7E4-BD7F236AB08F}.Release|Any CPU.Deploy.0 = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(SolutionProperties) = preSolution
+		HideSolutionNode = FALSE
+	EndGlobalSection
+	GlobalSection(ExtensibilityGlobals) = postSolution
+		SolutionGuid = {471B6481-ED2C-430C-9099-1FDC41D43334}
+	EndGlobalSection
+EndGlobal

@@ -1,0 +1,13 @@
+{
+  "dependencies": {
+    "@arcgis/core": "^4.29.10",
+    "@esri/calcite-components-react": "^2.7.1",
+    "bootstrap": "^5.3.3",
+    "chart.js": "^4.4.2",
+    "lodash": "^4.17.21",
+    "react-bootstrap": "^2.10.2",
+    "react-chartjs-2": "^5.2.0",
+    "react-datepicker": "^6.9.0",
+    "react-modal": "^3.16.1"
+  }
+}
