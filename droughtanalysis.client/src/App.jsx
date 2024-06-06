@@ -18,6 +18,7 @@ import '@esri/calcite-components/dist/components/calcite-button.js';
 //import {  CalciteButton } from '@esri/calcite-components-react';
 //import DatePickerComponent from './componet/DatePickerComponent.jsx';
 import './componet/Css/MapComponent.css';
+import './componet/Css/Outlook.css';
 
 
 function App() {
@@ -79,7 +80,7 @@ function App() {
               handleCountyChange={handleCountyChange} setSelectedCountyDraw={setSelectedCountyDraw} selectedCountyDraw={selectedCountyDraw} />}
           {activeComponent == "Outlook" &&
               <Outlook selectedCounty={selectedCounty}  handleCountyChange={handleCountyChange}
-                  setSelectedCountyDraw={setSelectedCountyDraw} setSelectedCounty={setSelectedCounty} />}
+              setSelectedCountyDraw={setSelectedCountyDraw} setSelectedCounty={setSelectedCounty} selectedCountyDraw={selectedCountyDraw} />}
 
             
     </div>

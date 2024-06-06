@@ -12,7 +12,7 @@ export function QueryDate(date) {
 
  export function QueryDateandCounty(date, county) {
      let loc;
-    console.log(county)
+   // console.log(county)
     if (county === null) {
          loc = "Texas"
     }else{

@@ -1,0 +1,12 @@
+.outlookBtn {
+    height: fit-content !important;
+    
+    width: 100px !important;
+    border-radius: 10px !important;
+    border:none !important;
+    margin-top: 5px !important;
+    margin-left: 5px !important;
+    color: white !important;
+    font-size: 18px !important;
+    font-weight: bold !important;
+}
