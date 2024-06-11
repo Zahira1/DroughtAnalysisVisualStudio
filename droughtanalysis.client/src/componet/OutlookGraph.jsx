@@ -9,8 +9,8 @@ import { Doughnut } from 'react-chartjs-2';
 import { areaFormatter } from './utils/areaFormatter.js';
 ChartJS.register(ArcElement, Tooltip, Legend);
 
-function GraphsSection({ selectedCounty, onchart, selectedCountyDraw,  }) {
-    const[chartData, setChartData] = useState([null]);
+function GraphsSection({ selectedCounty, onchart, selectedCountyDraw, }) {
+    const [chartData, setChartData] = useState([null]);
     const [areaTotal, setAreaTotal] = useState([]); // State to hold the Drought area indivisually
     const [areaTotalForest, setAreaTotalForest] = useState([]); // State to hold the forest area indivisually]
     const [forestArea, setForestArea] = useState(0); // State to hold the total forest area
@@ -24,7 +24,7 @@ function GraphsSection({ selectedCounty, onchart, selectedCountyDraw,  }) {
         ? ['Texas']
         : [...drawArray, ...countyArray];
 
-  
+
     function rounddown(num) {
         return Math.floor(num);
     }
@@ -36,9 +36,9 @@ function GraphsSection({ selectedCounty, onchart, selectedCountyDraw,  }) {
         let url = `https://tfsgis02.tfs.tamu.edu/arcgis/rest/services/DroughtAnalysis/DroughtAnalysis/MapServer/${id}`;
         console.log(url);
         const layer = new FeatureLayer({
-            url: url,    
+            url: url,
             outFields: ["*"],
-            
+
         });
         console.log(layer.url)
         let DM0 = [];
@@ -70,13 +70,13 @@ function GraphsSection({ selectedCounty, onchart, selectedCountyDraw,  }) {
         const formatedCountyList = countyList.map((county) => `'${county}'`);
         console.log(formatedCountyList);
         let countyquery = `Name IN (${formatedCountyList})`;
-       
+
         // console.log(countyquery);
         let areaQuery = new Query();
         areaQuery.where = countyquery;
         areaQuery.outFields = ["*"];
         areaQuery.returnGeometry = false;
-       
+
         if (countyList[0] === 'Texas') {
             setCountArea(171891840);
             setForestArea(0);
@@ -99,7 +99,7 @@ function GraphsSection({ selectedCounty, onchart, selectedCountyDraw,  }) {
 
 
         let TableQuery = new Query();
-        TableQuery.where = `location IN (${formatedCountyList})` ;
+        TableQuery.where = `location IN (${formatedCountyList})`;
         TableQuery.outFields = ["*"];
         TableQuery.returnGeometry = false;
         console.log(TableQuery.where)
@@ -141,7 +141,7 @@ function GraphsSection({ selectedCounty, onchart, selectedCountyDraw,  }) {
                         DM3ForestArea.push(feature.attributes.ForAcres);
                         console.log(feature.attributes.AllAcres);
                         break;
-                    
+
                     default:
                         break;
                 }
@@ -195,8 +195,8 @@ function GraphsSection({ selectedCounty, onchart, selectedCountyDraw,  }) {
                 const remainingPercentage = 100 - sumOfPercentages;
 
                 pctArea1[4] = remainingPercentage;
-                let pctArea;                            
-                pctArea = pctArea1;                
+                let pctArea;
+                pctArea = pctArea1;
                 console.log(pctArea)
                 setPctArea(pctArea);
                 setAreaTotal([areaFormatter(DM0Area.reduce((a, b) => a + b, 0)),
@@ -221,7 +221,7 @@ function GraphsSection({ selectedCounty, onchart, selectedCountyDraw,  }) {
         labels: [" Persist or intensifies", "Remains but improves", "Removal likely", "Development likely", "None"],
         datasets: [
             {
-                
+
                 data: pctArea,
                 backgroundColor: [
                     'rgba(154, 99, 74,1)',
@@ -229,7 +229,7 @@ function GraphsSection({ selectedCounty, onchart, selectedCountyDraw,  }) {
                     'rgba(178, 172, 105, 1)',
                     'rgba(255, 222, 99, 1)',
                     'rgba(239, 239, 239,1)',
-                    
+
                 ],
                 borderWidth: 0
             },
@@ -263,7 +263,7 @@ function GraphsSection({ selectedCounty, onchart, selectedCountyDraw,  }) {
                     <p style={{ margin: 0, fontSize: "12px", }}>{areaTotal[0]}  acres</p>
                     <h5 style={{ color: '#DED2BC', margin: 0 }}>{pctArea[1]} % Remains but improves </h5>
                     <p style={{ margin: 0, fontSize: "12px" }}>{areaTotal[1]}  acres</p>
-                    
+
                 </Col>
                 <Col xs={6} style={{ textAlign: 'left' }}>
                     <h5 style={{ color: '#B2AC69', margin: 0 }}>{pctArea[2]} % Removal likely </h5>
@@ -272,7 +272,7 @@ function GraphsSection({ selectedCounty, onchart, selectedCountyDraw,  }) {
                     <p style={{ margin: 0, fontSize: "12px" }}>{areaTotal[3]}  acres</p>
                     <h5 style={{ color: '#9A634A', margin: 0 }}>{pctArea[4]} % None </h5>
                     <p style={{ margin: 0, fontSize: "12px" }}>{areaTotal[4]}  acres</p>
-                    </Col>
+                </Col>
             </Row>
 
 

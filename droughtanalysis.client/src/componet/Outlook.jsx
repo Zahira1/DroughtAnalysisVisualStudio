@@ -3,7 +3,6 @@ import MapView from '@arcgis/core/views/MapView';
 import Map from '@arcgis/core/Map';
 import FeatureLayer from '@arcgis/core/layers/FeatureLayer';
 import MapImageLayer from '@arcgis/core/layers/MapImageLayer';
-
 import BasemapGallery from '@arcgis/core/widgets/BasemapGallery';
 import Expand from '@arcgis/core/widgets/Expand';
 import Draw from '@arcgis/core/views/draw/Draw';
@@ -37,25 +36,8 @@ function Outlook({ selectedCounty, handleCountyChange, setSelectedCountyDraw, se
                 center: [-117.1490, 32.7353],
                 scale: 10000000
             });
-            const NextOutlook = new FeatureLayer({
-                url: "https://tfsgis02.tfs.tamu.edu/arcgis/rest/services/DroughtAnalysis/DroughtAnalysis/MapServer/0",
-                opacity: 0.7
-            });
-            webmap.add(NextOutlook);
-            const SeasonalOutlook = new FeatureLayer({
-                url: "https://tfsgis02.tfs.tamu.edu/arcgis/rest/services/DroughtAnalysis/DroughtAnalysis/MapServer/1",
-                opacity: 0.7
-            });
-            webmap.add(SeasonalOutlook);
 
-            const swipe = new Swipe({
-                view: view.current,
-                leadingLayers: [NextOutlook],
-                trailingLayers: [SeasonalOutlook],
-                position: 50
-            });
-            view.current.ui.add(swipe);
-            
+
 
             // Add forest layer
             const forest = new MapImageLayer({
@@ -70,6 +52,7 @@ function Outlook({ selectedCounty, handleCountyChange, setSelectedCountyDraw, se
                 legendEnabled: true
             });
             webmap.add(forest);
+
             // Add counties layer
             counties.current = new FeatureLayer({
                 url: 'https://tfsgis02.tfs.tamu.edu/arcgis/rest/services/Shared/Boundaries/MapServer/1',
@@ -83,7 +66,20 @@ function Outlook({ selectedCounty, handleCountyChange, setSelectedCountyDraw, se
                 }
             });
             webmap.add(counties.current);
+            const NextOutlook = new FeatureLayer({
+                url: "https://tfsgis02.tfs.tamu.edu/arcgis/rest/services/DroughtAnalysis/DroughtAnalysis/MapServer/0",
+                opacity: 0.7
+            });
+            webmap.add(NextOutlook);
+            NextOutlookRef.current = NextOutlook;
 
+            const SeasonalOutlook = new FeatureLayer({
+                url: "https://tfsgis02.tfs.tamu.edu/arcgis/rest/services/DroughtAnalysis/DroughtAnalysis/MapServer/1",
+                opacity: 0.7,
+                visible: false // Initially set the Seasonal layer to be invisible
+            });
+            webmap.add(SeasonalOutlook);
+            SeasonalOutlookRef.current = SeasonalOutlook;
             // Add widgets Basemap
             const basemapGallery = new BasemapGallery({
                 view: view.current,
@@ -94,6 +90,7 @@ function Outlook({ selectedCounty, handleCountyChange, setSelectedCountyDraw, se
                 content: basemapGallery.container,
                 expandIconClass: 'esri-icon-basemap'
             });
+            // Adding Layerlist
             const layerListExp = new Expand({
                 view: view.current,
                 content: CreateLayerList(view),
@@ -121,6 +118,7 @@ function Outlook({ selectedCounty, handleCountyChange, setSelectedCountyDraw, se
                 let chartdata;
                 forest.visible = !forest.visible;
                 chartdata = forest.visible ? 'pctForestArea' : 'pctArea';
+                console.log("forest", chartdata);
                 // onForestToggle(chartdata);
 
             }
@@ -128,6 +126,7 @@ function Outlook({ selectedCounty, handleCountyChange, setSelectedCountyDraw, se
             view.current.ui.add(bgExpand, 'bottom-right');
         };
         initializeMap();
+    }, [setSelectedCounty, setSelectedCountyDraw]);
 
     useEffect(() => {
         const query = counties.current.createQuery();
@@ -207,19 +206,17 @@ function Outlook({ selectedCounty, handleCountyChange, setSelectedCountyDraw, se
                 </Row>
             </div>
         </div>
-            
-       
+
+
     );
 }
 
 Outlook.propTypes = {
-    selectedDate: PropTypes.instanceOf(Date),
     selectedCounty: PropTypes.string,
+    handleCountyChange: PropTypes.func.isRequired,
     setSelectedCountyDraw: PropTypes.func.isRequired,
     selectedCountyDraw: PropTypes.array,
     setSelectedCounty: PropTypes.func.isRequired
-
-
 };
 
 export default Outlook;
