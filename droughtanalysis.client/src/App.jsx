@@ -1,6 +1,7 @@
 
 import './App.css';
 import Outlook from './componet/Outlook.jsx';
+import Timeline from './componet/Timeline.jsx';
 //import MapComponent from './componet/MapComponent'; 
 //import GraphsSection from './componet/GraphsSection';
 import Monitor from './componet/Monitor';
@@ -80,7 +81,9 @@ function App() {
               handleCountyChange={handleCountyChange} setSelectedCountyDraw={setSelectedCountyDraw} selectedCountyDraw={selectedCountyDraw} />}
           {activeComponent == "Outlook" &&
               <Outlook selectedCounty={selectedCounty}  handleCountyChange={handleCountyChange}
-              setSelectedCountyDraw={setSelectedCountyDraw} setSelectedCounty={setSelectedCounty} selectedCountyDraw={selectedCountyDraw} />}
+                  setSelectedCountyDraw={setSelectedCountyDraw} setSelectedCounty={setSelectedCounty} selectedCountyDraw={selectedCountyDraw} />}
+          {activeComponent == "Timeline" &&
+              <Timeline/>}
 
             
     </div>
