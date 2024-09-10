@@ -14,6 +14,8 @@ import ButtonGroup from 'react-bootstrap/ButtonGroup';
 import ToggleButton from 'react-bootstrap/ToggleButton';
 import { Row, Col } from 'react-bootstrap';
 import GraphsSection from './OutlookGraph';
+import { submitJob } from '@arcgis/core/rest/geoprocessor';
+import { GetWebMapAsJsonString } from './utils/MapAsJson';
 function Outlook({ selectedCounty, handleCountyChange, setSelectedCountyDraw, setSelectedCounty, selectedCountyDraw }) {
     const counties = useRef(null);
     const highlightSelect = useRef(null);
@@ -23,6 +25,21 @@ function Outlook({ selectedCounty, handleCountyChange, setSelectedCountyDraw, se
     const [radioValue, setRadioValue] = useState('1');
     const NextOutlookRef = useRef(null);
     const SeasonalOutlookRef = useRef(null);
+    useEffect(() => {
+        // Adjust the height of the .mapDiv based on the navbar height
+        function adjustMapDivHeight() {
+            const navbarHeight = document.querySelector('.navbar').offsetHeight;
+            const mapDiv = document.querySelector('.mapDiv');
+            mapDiv.style.height = `${window.innerHeight - navbarHeight}px`;
+        }
+
+        // Call the function on component mount and on window resize
+        adjustMapDivHeight();
+        window.addEventListener('resize', adjustMapDivHeight);
+
+        // Cleanup event listener on component unmount
+        return () => window.removeEventListener('resize', adjustMapDivHeight);
+    }, []);
 
     useEffect(() => {
         const initializeMap = async () => {
@@ -91,11 +108,11 @@ function Outlook({ selectedCounty, handleCountyChange, setSelectedCountyDraw, se
                 expandIconClass: 'esri-icon-basemap'
             });
             // Adding Layerlist
-            const layerListExp = new Expand({
-                view: view.current,
-                content: CreateLayerList(view),
-                expanded: true
-            });
+            //const layerListExp = new Expand({
+            //    view: view.current,
+             //   content: CreateLayerList(view),
+             //   expanded: true
+            //});
             // Add Draw tool
             const draw = new Draw({
                 view: view.current
@@ -103,7 +120,7 @@ function Outlook({ selectedCounty, handleCountyChange, setSelectedCountyDraw, se
             const drawTool = document.getElementById('draw');
             view.current.ui.add(drawTool, 'top-right');
             document.getElementById('draw-polygon').onclick = () => {
-                DrawLine(draw, view, setSelectedCountyDraw);
+                DrawLine(draw, view.current, setSelectedCountyDraw);
             };
             document.getElementById('clear-selction').onclick = () => {
                 view.current.graphics.removeAll();
@@ -118,11 +135,30 @@ function Outlook({ selectedCounty, handleCountyChange, setSelectedCountyDraw, se
                 let chartdata;
                 forest.visible = !forest.visible;
                 chartdata = forest.visible ? 'pctForestArea' : 'pctArea';
-                console.log("forest", chartdata);
+                
                 // onForestToggle(chartdata);
 
             }
-            view.current.ui.add(layerListExp, 'top-right');
+            // Print button
+
+
+            const geoprocessor = 'https://tfsgis02.tfs.tamu.edu/arcgis/rest/services/Shared/PrintUsingPro/GPServer/PrintUsingPro';
+            document.getElementById('print').onclick = async () => {
+                try {
+                    const printParameters = {
+                        Web_Map_as_JSON: GetWebMapAsJsonString(view.current)
+                    };
+                    console.log(printParameters.Web_Map_as_JSON)
+                    const jobInfo = await submitJob(geoprocessor, printParameters);
+                    await jobInfo.waitForJobCompletion();
+                    const response = await jobInfo.fetchResultData('Output_File');
+                    console.log(response.value.url);
+                } catch (error) {
+                    console.error('Print error:', error);
+                }
+            };
+
+            //view.current.ui.add(layerListExp, 'top-right');
             view.current.ui.add(bgExpand, 'bottom-right');
         };
         initializeMap();

@@ -1,6 +1,13 @@
 @DroughtAnalysis.Server_HostAddress = http://localhost:5077
 
-GET {{DroughtAnalysis.Server_HostAddress}}/weatherforecast/
+GET {{DroughtAnalysis.Server_HostAddress}}/ReportService/
 Accept: application/json
 
 ###
+### Post to ReportService
+POST {{DroughtAnalysis.Server_HostAddress}}/ReportService
+Content-Type: application/json
+
+{
+    "content": "https://tfsgis02.tfs.tamu.edu/arcgis/rest/directories/arcgisjobs/shared/printusingpro_gpserver/j20bb563fcdbf486890665acaf5a169c9/scratch/WebMap_p618034c6536011efabed0050568c8b0a.PDF"
+}

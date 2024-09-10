@@ -1,13 +1,18 @@
 {
   "dependencies": {
-    "@arcgis/core": "^4.29.10",
+    "@arcgis/core": "^4.30.9",
     "@esri/calcite-components-react": "^2.7.1",
     "bootstrap": "^5.3.3",
-    "chart.js": "^4.4.2",
+    "chart.js": "^4.4.3",
+    "chartjs-adapter-date-fns": "^3.0.0",
+    "chartjs-plugin-zoom": "^2.0.1",
+    "date-fns": "^3.6.0",
     "lodash": "^4.17.21",
     "react-bootstrap": "^2.10.2",
     "react-chartjs-2": "^5.2.0",
     "react-datepicker": "^6.9.0",
-    "react-modal": "^3.16.1"
+    "react-modal": "^3.16.1",
+    "react-responsive": "^10.0.0",
+    "reactjs-popup": "^2.0.6"
   }
 }

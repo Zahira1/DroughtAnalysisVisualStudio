@@ -1,6 +1,7 @@
 import React, { useEffect, useState } from 'react';
+import Popup from 'reactjs-popup';
 import { QueryDateandCounty } from './utils/DateFormatter.js';
-import { Row, Col } from 'react-bootstrap';
+import { Row, Col, Container } from 'react-bootstrap';
 import PropTypes from 'prop-types';
 import FeatureLayer from '@arcgis/core/layers/FeatureLayer';
 import Query from "@arcgis/core/rest/support/Query.js";
@@ -262,13 +263,24 @@ function GraphsSection({ selectedDate, selectedCounty, onchart, selectedCountyDr
     const containerStyle = {
         position: 'relative',
         width: '100%',
-        height: '200px',
+        height: '20vh',
         margin: '0 auto',
     };
+    const formattedCountyList = countyList.map((county, index) => (
+        (index + 1) % 3 === 0 ? `${county}\n` : `${county}, `
+    )).join('').replace(/,\n/g, '\n'); // Remove comma before new line
 
     return (
         <div style={containerStyle}>
-            <h4>{countyList}</h4>
+        
+            <Popup trigger=
+                {<button> {countyList[0]} </button>}
+                position="right center">
+                <div style={{ backgroundColor: 'white' }}>{formattedCountyList}</div>
+                
+            </Popup>
+            <br />
+            <br />
             <Doughnut data={data} options={options} />
             <Row style={{ margin: 0, }} >
                 <Col xs={6} style={{ textAlign: 'left' }}>
@@ -289,7 +301,7 @@ function GraphsSection({ selectedDate, selectedCounty, onchart, selectedCountyDr
                 </Col>
             </Row>
             
-            
+          
 
         </div>
     );

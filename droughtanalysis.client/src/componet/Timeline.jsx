@@ -1,3 +1,4 @@
+/* eslint-disable no-debugger */
 import { useEffect, useRef, useState } from 'react';
 import MapView from "@arcgis/core/views/MapView";
 import Map from "@arcgis/core/Map";
@@ -11,7 +12,11 @@ import Query from "@arcgis/core/rest/support/Query.js";
 import { Row, Col } from 'react-bootstrap';
 import { areaFormatter } from './utils/areaFormatter.js';
 import './Css/timeline.css';
+
+import Histogram from './Histogram.jsx';
 function Timeline() {
+
+    const [isAboutModalOpen, setIsAboutModalOpen] = useState(false);
     const mapDiv = useRef(null);
     const timeSliderDiv = useRef(null);
     const mapViewRef = useRef(null);
@@ -140,12 +145,14 @@ function Timeline() {
 
                     const featureSet = await layer.queryFeatures(query);
                     console.log("featureSet", featureSet);
-
+                    debugger
                     featureSet.features.forEach((feature) => {
                         const DM = feature.attributes.DM;
+                        const Date = feature.attributes.Date;
                         const AllPct = feature.attributes.AllPct;
                         const AreaA = feature.attributes.AllAcres;
                         console.log("AllPct", AllPct);
+                        console.log(Date);
                         if (DM >= 0 && DM <= 5) {
                             newData[DM] += rounddown(AllPct);
                             area[DM] += (AreaA);
@@ -153,7 +160,7 @@ function Timeline() {
                     });
 
                     const noneD = 100 - (newData[0] + newData[1] + newData[2] + newData[3] + newData[4]);
-                    const noneA = 100 - (area[0] + area[1] + area[2] + area[3] + area[4]);
+                    const noneA = 171902080 - (area[0] + area[1] + area[2] + area[3] + area[4]);
                     area[5] = noneA;
                     newData[5] = noneD;
 
@@ -200,15 +207,16 @@ function Timeline() {
     // Render the map container, time slider container, and text div in the top-right corner
     return (
         <div style={{ height: "88.9vh", width: "100%", position: "relative" }}>
-            <div ref={mapDiv} style={{ height: "100%", width: "100%" }}></div>
+            <div ref={mapDiv} style={{ height: "88.9vh", width: "100%" }}></div>
             <div ref={timeSliderDiv} style={{ position: "absolute", bottom: 0, width: "70%" }}></div>
-            
+            <Histogram isOpen={isAboutModalOpen} onClose={closeAboutModal} ></Histogram>
             <div style={{ position: 'absolute', top: 0, right: 0, width: '20%', height: '45vh', margin: '1rem', background: '#333333', padding: '1rem', boxShadow: '0 0 10px rgba(0, 0, 0, 0.1)', zIndex: 10 }}>
                 <div style={{ position: 'absolute', top: 0, left: 0, margin: '1rem', zIndex: 10 }}>
                     <button className='btn btn btn-info histogram-button' style={{ backgroundcolor: '#00796b' }} onClick = { openAboutModal }>Histogram</button>
                 </div>
                 <div style={{ position: 'relative', width: '100%', height: '20vh', color: '#D7D7D7', top:'5vh' }}>
                     <Doughnut data={chartData} options={chartOptions} />
+                    
                     <Row style={{ margin: 0 }}>
                         <Col xs={6} style={{ textAlign: 'left' }}>
                             <h6 style={{ color: '#730000', margin: 0 }}> {data[4]} % Exceptional </h6>

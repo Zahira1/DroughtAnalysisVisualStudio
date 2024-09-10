@@ -9,17 +9,21 @@ import Monitor from './componet/Monitor';
 // Remove the unused import statement for 'React'
 import  { useState } from 'react';
 import './componet/Css/Header.css';
-import Logo from './assets/Logo.png';
+import Logo from './assets/starWhite.png';
 import AboutModal from './componet/AboutModal.jsx';
 import Container from 'react-bootstrap/Container';
-import Row from 'react-bootstrap/Row';
-import Col from 'react-bootstrap/Col';
+
+import Nav from 'react-bootstrap/Nav';
+import Navbar from 'react-bootstrap/Navbar';
 import '@esri/calcite-components/dist/components/calcite-button.js';
 //import CountyPicker from './componet/CountyPicker.jsx';
 //import {  CalciteButton } from '@esri/calcite-components-react';
 //import DatePickerComponent from './componet/DatePickerComponent.jsx';
 import './componet/Css/MapComponent.css';
 import './componet/Css/Outlook.css';
+import { useMediaQuery } from 'react-responsive';
+
+
 
 
 function App() {
@@ -48,30 +52,42 @@ function App() {
   return (
     <div className="App">    
        
-      <header className='header'>
-        <Container>
-          <Row>
-            <Col xs={1}>
-              <img src={Logo} style={{ height: '5vh' }} alt="Logo" />
-            </Col>
-            <Col xs={8}>
-              <h2>Drought Condition</h2>
-            </Col>
-          </Row>
-        </Container>
-
-        <Container className='home2'>
-          <a className='home' href='https://tfsweb.tamu.edu/'>Home | </a>
-          <a className='home' href='https://texasforestinfo.tamu.edu/contact/'> | Contact</a>
-        </Container>
-      </header>
      
-      <nav className='nav'>
-              <button className='btn ' onClick={openAboutModal}>About</button>
-              <button className='btn  ' onClick={() => setActiveComponent('Monitor')}>Monitor</button>
-              <button className='btn  ' onClick={() => setActiveComponent('Outlook')} >Outlook</button>
-              <button className='btn  ' onClick={() => setActiveComponent('Timeline')}>Timeline</button>
-      </nav>
+
+          <Navbar expand="lg" className="navbar-expand-lg w-100" bg="dark" data-bs-theme="dark">
+              <Container fluid>
+                  <Navbar.Brand className="mb-0 h1" href="#home">
+                      <img
+                          src={Logo}
+                          width="32"
+                          height="32"
+                          className="d-inline-block align-top"
+                          alt="Logo"
+                      />Drought Condition Analysis
+                  </Navbar.Brand>
+                  <Navbar.Toggle aria-controls="basic-navbar-nav" />
+                  <Navbar.Collapse id="basic-navbar-nav">
+                      <Nav className="nav-left">
+                          <Nav.Link onClick={() => handleNavClick('Home')}>Home</Nav.Link>
+                          <Nav.Link onClick={() => handleNavClick('Contact')}>Contact</Nav.Link>
+                      </Nav>
+                  </Navbar.Collapse>
+              </Container>
+          </Navbar>
+
+          <Navbar expand='sm' className='navbar-expand-sm navbar-second '  >
+              <Navbar.Collapse id="basic-nav">
+                  <Nav className="nav-center">
+                  
+                      <Nav.Link onClick={openAboutModal}>About</Nav.Link>
+                      <Nav.Link onClick={() => setActiveComponent('Monitor')}>Monitor</Nav.Link>
+                      <Nav.Link onClick={() => setActiveComponent('Outlook')}>Outlook</Nav.Link>
+                      <Nav.Link onClick={() => setActiveComponent('Timeline')}>Timeline</Nav.Link>
+                  </Nav>
+              </Navbar.Collapse>
+          </Navbar>
+
+
 
           <AboutModal isOpen={isAboutModalOpen} onClose={closeAboutModal} /> 
       

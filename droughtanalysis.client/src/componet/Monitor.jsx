@@ -1,26 +1,40 @@
 import './Css/MapComponent.css';
-import { useState } from 'react';
+import { useState, useEffect} from 'react';
 import MapComponent from './MapComponent';
 import GraphsSection from './GraphsSection';
 import FeatureLayer from '@arcgis/core/layers/FeatureLayer';
 import './Css/Header.css';
 //import Logo from './assets/Logo.png';
-import MapImageLayer from '@arcgis/core/layers/MapImageLayer';
-import { Row, Col } from 'react-bootstrap'; // Assuming you're using react-bootstrap for Row and Col
+
+import { Row, Col, Container } from 'react-bootstrap'; // Assuming you're using react-bootstrap for Row and Col
 import DatePickerComponent from './DatePickerComponent.jsx';
 import CountyPicker from './CountyPicker.jsx';
 import PropTypes from 'prop-types';
 import { QueryDate } from './utils/DateFormatter';
 function Monitor({ selectedDate, selectedCounty, handleDateChange, setSelectedCounty ,handleCountyChange, setSelectedCountyDraw, selectedCountyDraw }) {
-    const[isForestVisible, setIsForestVisible] = useState(true);
-    let layer = new MapImageLayer({
-        url : 'https://tfsgis-dfe02.tfs.tamu.edu/arcgis/rest/services/DroughtAnalysis/DroughtAnalysisAllData/MapServer',
-        sublayers: [{
-            id: 1,
-            title: "Drought Condition",
-            listMode: "hide",
-            definationExpression: QueryDate(selectedDate)
-        }],
+    useEffect(() => {
+        // Adjust the height of the .mapDiv based on the navbar height
+        function adjustMapDivHeight() {
+            const navbarHeight = document.querySelector('.navbar').offsetHeight;
+            const mapDiv = document.querySelector('.mapDiv');
+            mapDiv.style.height = `${window.innerHeight - navbarHeight-40}px`;
+        }
+
+        // Call the function on component mount and on window resize
+        adjustMapDivHeight();
+        window.addEventListener('resize', adjustMapDivHeight);
+
+        // Cleanup event listener on component unmount
+        return () => window.removeEventListener('resize', adjustMapDivHeight);
+    }, []);
+
+
+    const [isForestVisible, setIsForestVisible] = useState(true);
+    let layer = new FeatureLayer({
+        url : 'https://tfsgis-dfe02.tfs.tamu.edu/arcgis/rest/services/DroughtAnalysis/DroughtAnalysisAllData/MapServer/1',
+       
+            definitionExpression: QueryDate(selectedDate),
+       
        title: "Drought Condition",
        listMode: "hide",
        // definationExpression: QueryDate(selectedDate)
@@ -40,17 +54,27 @@ function Monitor({ selectedDate, selectedCounty, handleDateChange, setSelectedCo
                 queryDate={expression} onForestToggle={setIsForestVisible}
                 setSelectedCountyDraw={setSelectedCountyDraw} selectedCountyDraw={selectedCountyDraw}
                 setSelectedCounty={setSelectedCounty}            />
-            <div className='graphDiv'>
-                <Row style={colStyle}>
-                    <Col xs={6} style={colStyle}>
+            <Container className='graphDiv' size="sm">
+                <Row>
+                    <Col  sm={6} style={colStyle}>
                         <DatePickerComponent onChange={handleDateChange} />
                     </Col>
-                    <Col xs={5} style={colStyle}>
+                    <Col  sm={4} style={colStyle}>
                         <CountyPicker onChange={handleCountyChange} />
                     </Col>
-                    <GraphsSection selectedDate={selectedDate} selectedCounty={selectedCounty} chartData={chartData} selectedCountyDraw={selectedCountyDraw }></GraphsSection>
                 </Row>
-            </div>
+                <Row>
+                    <Col xs={12}>
+                        <GraphsSection
+                            selectedDate={selectedDate}
+                            selectedCounty={selectedCounty}
+                            chartData={chartData}
+                            selectedCountyDraw={selectedCountyDraw}
+                        />
+                    </Col>
+                </Row>
+            </Container>
+
         </div>
     );
 }

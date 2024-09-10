@@ -1,19 +1,21 @@
-/* Add these styles to your CSS file or style block in your component */
 @import "https://js.arcgis.com/4.28/@arcgis/core/assets/esri/themes/dark/main.css";
 @import "@esri/calcite-components/dist/calcite/calcite.css";
 
 .mapDiv {
     height: 88vh; /* Set the desired height */
     width: 100%;
-    position: absolute
+    position: absolute;
 }
+
 .btn {
     color: #fff !important;
     background-color: #005b91;
 }
-.btn :hover {
-    background-color: #444 !important;
-}
+
+    .btn:hover {
+        background-color: #444 !important;
+    }
+
 .toggleBtn {
     position: absolute;
     top: 43vh;
@@ -33,17 +35,15 @@
 
 .graphDiv {
     display: flex;
+    flex-direction: column; /* Stack content on smaller screens */
     position: relative;
     background-color: #333;
-    height: 55vh;
-    width: 52vh;
     color: aliceblue;
     opacity: 1;
-    top: 33vh;
-    left: 1vh;
-
+    padding: 10px;
     transition: opacity 0.9s ease-in-out;
 }
+
 
 .graphDiv-hidden {
     opacity: 0;
@@ -53,17 +53,15 @@
     background-color: #333 !important;
 }
 
-
 .select-options {
     position: absolute;
     top: 100%;
     left: 0;
-    width: 100%;
-    padding-left: 10px;
+    max-width: 150px;
+    padding-left: 5px;
     margin-top: 5px;
     border: 1px solid #ccc;
     border-radius: 5px;
-   
     color: white;
     display: none;
 }
@@ -74,19 +72,115 @@
     right: 0;
     height: 30px;
     padding-top: 1vh;
-    padding-left: 1vh;
+    
+    width:auto;
 }
 
-.Date-ele {
-    height: 35px;
-    margin-left: 10px;
+.map-container {
+    position: relative;
 }
 
-.esri-layer-list__item-content {
-    font-size: 15px;
-    font-weight: bold;
+/* Responsive Styling */
+@media (max-width: 700px) {
+    .button-group-responsive {
+        flex-direction: column;
+        position: absolute;
+        top: 60px;
+        right: 10px;
+        z-index: 999;
+        width: auto;
+        display: flex;
+    }
+
+    .esri-widget.tool {
+        font-size: 0; /* Hide text */
+        padding: 10px;
+        display: flex;
+        justify-content: center;
+    }
+
+        .esri-widget.tool span {
+            font-size: 18px; /* Keep icon size */
+        }
+
+    /* Adjust button position for mobile */
+    .toggleBtn {
+        top: 45vh;
+        left: 2vh;
+    }
+
+    
+
+    .datepicker-section {
+      
+        height: auto;
+    }
 }
 
-.esri-legend__layer-caption {
-    display: none;
+
+@media (min-width: 700px) {
+    .button-group-responsive {
+        flex-direction: row;
+        justify-content: space-between;
+        width: 100%;
+        max-width: 600px;
+    }
+
+    .esri-widget.tool {
+        font-size: 14px;
+    }
+
+    .toggleBtn {
+        top: 43vh;
+        left: 1vh;
+    }
+
+    .graphDiv {
+        height: 55vh;
+        width: 52vh;
+        left: 1vh;
+        top: 33vh;
+    }
+}
+
+/* Further media queries for larger screens */
+@media (min-width: 992px) {
+    .mapDiv {
+        height: 600px;
+    }
+    .graphDiv {
+        height: 55vh;
+        width: 52vh;
+        top: 33vh;
+        left: 1vh;
+    }
+
+    .button-group-responsive {
+        max-width: 800px;
+    }
+
+    .esri-widget.tool {
+        font-size: 16px;
+    }
+}
+
+@media (min-width: 1200px) {
+    .mapDiv {
+        height: 700px;
+    }
+    .graphDiv {
+        height: 55vh;
+        
+        top: 33vh;
+        left: 1vh;
+        max-width:500px!important;
+    }
+}
+@media (min-width: 1400px) {
+    .container-xxl, .container-xl, .container-lg, .container-md, .container-sm, .container {
+        max-width: 540px!important;
+        flex:content;
+        align-self:flex-start;
+        
+    }
 }

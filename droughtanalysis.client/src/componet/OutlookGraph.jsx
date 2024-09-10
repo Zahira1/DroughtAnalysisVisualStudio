@@ -31,16 +31,16 @@ function GraphsSection({ selectedCounty, onchart, selectedCountyDraw, }) {
 
     useEffect(() => {
         //console.log(layer1.definitionExpression) 
-        console.log(onchart);
+       // console.log(onchart);
         let id = onchart == '1' ? 28 : 27;
         let url = `https://tfsgis02.tfs.tamu.edu/arcgis/rest/services/DroughtAnalysis/DroughtAnalysis/MapServer/${id}`;
-        console.log(url);
+       // console.log(url);
         const layer = new FeatureLayer({
             url: url,
             outFields: ["*"],
 
         });
-        console.log(layer.url)
+        //console.log(layer.url)
         let DM0 = [];
         let DM1 = [];
         let DM2 = [];
@@ -68,7 +68,7 @@ function GraphsSection({ selectedCounty, onchart, selectedCountyDraw, }) {
             outFields: ["*"],
         });
         const formatedCountyList = countyList.map((county) => `'${county}'`);
-        console.log(formatedCountyList);
+       // console.log(formatedCountyList);
         let countyquery = `Name IN (${formatedCountyList})`;
 
         // console.log(countyquery);
@@ -102,7 +102,7 @@ function GraphsSection({ selectedCounty, onchart, selectedCountyDraw, }) {
         TableQuery.where = `location IN (${formatedCountyList})`;
         TableQuery.outFields = ["*"];
         TableQuery.returnGeometry = false;
-        console.log(TableQuery.where)
+       // console.log(TableQuery.where)
 
         layer.queryFeatures(TableQuery).then((response) => {
             // let totalArea = 0;
@@ -111,19 +111,19 @@ function GraphsSection({ selectedCounty, onchart, selectedCountyDraw, }) {
             const features = response.features;
             features.forEach((feature) => {
                 const DM = onchart === '1' ? feature.attributes.SDO : feature.attributes.MDO;
-                console.log(DM);
+                //console.log(DM);
                 switch (DM) {
                     case 0:
                         DM0.push(feature.attributes.AllPct);
                         DM0Forest.push(feature.attributes.ForPct);
                         DM0Area.push(feature.attributes.AllAcres);
                         DM0ForestArea.push(feature.attributes.ForAcres);
-                        console.log(feature.attributes.AllAcres);
+                        //console.log(feature.attributes.AllAcres);
                         break;
                     case 1:
                         DM1.push(feature.attributes.AllPct);
                         DM1Forest.push(feature.attributes.ForPct);
-                        console.log(feature.attributes.AllAcres);
+                       // console.log(feature.attributes.AllAcres);
                         DM1Area.push(feature.attributes.AllAcres);
                         DM1ForestArea.push(feature.attributes.ForAcres);
                         break;
@@ -132,14 +132,14 @@ function GraphsSection({ selectedCounty, onchart, selectedCountyDraw, }) {
                         DM2Forest.push(feature.attributes.ForPct);
                         DM2Area.push(feature.attributes.AllAcres);
                         DM2ForestArea.push(feature.attributes.ForAcres);
-                        console.log(feature.attributes.AllAcres);
+                      //  console.log(feature.attributes.AllAcres);
                         break;
                     case 3:
                         DM3.push(feature.attributes.AllPct);
                         DM3Forest.push(feature.attributes.ForPct);
                         DM3Area.push(feature.attributes.AllAcres);
                         DM3ForestArea.push(feature.attributes.ForAcres);
-                        console.log(feature.attributes.AllAcres);
+                    //    console.log(feature.attributes.AllAcres);
                         break;
 
                     default:
@@ -157,7 +157,7 @@ function GraphsSection({ selectedCounty, onchart, selectedCountyDraw, }) {
             let sunDMForest = DM0Forest.reduce((a, b) => a + b, 0) + DM1Forest.reduce((a, b) => a + b, 0) + DM2Forest.reduce((a, b) => a + b, 0) + DM3Forest.reduce((a, b) => a + b, 0) + DM4Forest.reduce((a, b) => a + b, 0);
             let noneAreaForest = forestArea - sunDMForest;
 
-            console.log(countArea, "None", noneArea);
+            //console.log(countArea, "None", noneArea);
 
             if (countyList.length === 1) {
                 //console.log("inside", countyList);
@@ -168,10 +168,10 @@ function GraphsSection({ selectedCounty, onchart, selectedCountyDraw, }) {
                 //console.log("SumDms",sumDMs);
 
             } else {
-                console.log("inside", countyList);
+                //console.log("inside", countyList);
                 const Area = DM0Area.reduce((a, b) => a + b, 0) + DM1Area.reduce((a, b) => a + b, 0) + DM2Area.reduce((a, b) => a + b, 0) + DM3Area.reduce((a, b) => a + b, 0) + DM4Area.reduce((a, b) => a + b, 0);
                 const ForestArea = DM0ForestArea.reduce((a, b) => a + b, 0) + DM1ForestArea.reduce((a, b) => a + b, 0) + DM2ForestArea.reduce((a, b) => a + b, 0) + DM3ForestArea.reduce((a, b) => a + b, 0) + DM4ForestArea.reduce((a, b) => a + b, 0);
-                console.log(Area, ForestArea, sumDMAres)
+               // console.log(Area, ForestArea, sumDMAres)
                 const pctArea1 = sumDMs === 0 ? [0, 0, 0, 0, 0, 0] : [
                     rounddown((DM0Area.reduce((a, b) => a + b, 0) / countArea) * 100),
                     rounddown((DM1Area.reduce((a, b) => a + b, 0) / countArea) * 100),
@@ -197,7 +197,7 @@ function GraphsSection({ selectedCounty, onchart, selectedCountyDraw, }) {
                 pctArea1[4] = remainingPercentage;
                 let pctArea;
                 pctArea = pctArea1;
-                console.log(pctArea)
+               // console.log(pctArea)
                 setPctArea(pctArea);
                 setAreaTotal([areaFormatter(DM0Area.reduce((a, b) => a + b, 0)),
                 areaFormatter(DM1Area.reduce((a, b) => a + b, 0)),

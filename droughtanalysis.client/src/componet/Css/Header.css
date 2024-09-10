@@ -4,7 +4,7 @@
     background-color: #333;
     color: #fff;
     height: 7vh;
-    width: 100%;
+    
 }
 
 .home2 {
@@ -33,7 +33,11 @@
     }
 
 .logo {
-    width: 30px; /* Adjust the width of the logo as needed */
+     /* Adjust the width of the logo as needed */
+    float: left; /* Aligns the logo to the left */
+    margin-right: 10px; /* Adds some space between the logo and the next element */
+    display: inline-block; /* Ensures the logo behaves like an inline element */
+    vertical-align: middle;
 }
 
 h2 {
@@ -41,4 +45,61 @@ h2 {
     font-weight: 500;
     margin: 0;
     padding: 0;
+}
+/* App.css */
+.nav-btn {
+    background-color: #007bff ;
+    color: #fff !important;
+    padding: 10px 20px !important;
+    border: none;
+    cursor: pointer;
+}
+
+    .nav-btn:hover {
+        background-color: #0056b3 !important;
+    }
+
+    .nav-btn.active {
+        background-color: #28a745 !important; /* Change this to the color you want for the active button */
+        color: #fff;
+    }
+
+@media(min-width: 1400px){
+    .header-container{
+        max-width:100%!important;
+    }
+}
+
+@media(max-width:768px) {
+    .nav {
+        max-height: 5vh;
+    }
+
+    .nav-btn {
+        max-height: 5vh;
+    }
+}
+.nav-left {
+    margin-left: auto;
+}
+/* Custom CSS for second navbar */
+.navbar-second {
+    height: 40px; /* Decrease the height of the second navbar */
+    display: flex;
+    align-items: center; /* Center the nav links vertically */
+    justify-content: center; /* Center the nav links horizontally */
+    font-size: 14px; /* Adjust font size if needed */
+    background-color: #736E3E !important;
+    color: azure !important;
+}
+
+    .navbar-second .nav-link {
+        /* Adjust padding for nav links */
+        color: azure !important;
+        font-weight: bold;
+    }
+
+
+#basic-nav {
+    color: azure !important;
 }
