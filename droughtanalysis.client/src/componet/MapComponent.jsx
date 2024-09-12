@@ -37,7 +37,7 @@ function MapComponent({ selectedDate, selectedCounty, queryDate, onForestToggle,
                 center: [-117.1490, 32.7353],
                 scale: 10000000
             });
-
+    
             // Add forest layer
             const forest = new MapImageLayer({
                 url: 'https://tfsgis02.tfs.tamu.edu/arcgis/rest/services/Shared/Forest2015/MapServer',
@@ -91,6 +91,15 @@ function MapComponent({ selectedDate, selectedCounty, queryDate, onForestToggle,
             });
             const drawTool = document.getElementById('draw');
             view.current.ui.add(drawTool, 'top-right');
+            const toolsExpand = new Expand({
+                view: view.current,
+                expandIconClass: "esri-icon-filter",
+                content: document.getElementById("infoDiv"),
+                expanded: true,
+                group: "top-left",
+                mode: "floating"
+              });
+              view.current.ui.add(toolsExpand, 'top-left');
             document.getElementById('draw-polygon').onclick = () => {
                 DrawLine(draw, view.current, setSelectedCountyDraw);
             };
